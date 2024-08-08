@@ -4,14 +4,42 @@
     <meta charset="UTF-8">
     <title>주소 검색</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-    <input type="text" id="address" name="address" placeholder="주소를 입력하세요" onClick="execDaumPostcode()" />
+    <div class="container">
+        <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly />
+        <button type="button" onclick="execDaumPostcode()">주소 검색</button>
+        <input type="text" id="address" name="address" placeholder="기본 주소" readonly />
+        <input type="text" id="detailAddress" name="detailAddress" placeholder="상세 주소" />
+    </div>
     <script>
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                document.getElementById('address').value = data.address;
+                document.getElementById('postcode').value = data.zonecode; // 우편번호
+                document.getElementById('address').value = data.address; // 기본 주소
+                document.getElementById('detailAddress').focus(); // 상세 주소 입력 필드로 포커스 이동
             }
         }).open();
     }
