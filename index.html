@@ -81,7 +81,7 @@
     </style>
 </head>
 <body>
-    <form action="https://submit.jotform.com/242198589311060" method="post">
+    <form id="addressForm">
         <div class="container">
             <div class="form-group inline">
                 <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly />
@@ -92,9 +92,6 @@
             </div>
             <div class="form-group">
                 <input type="text" id="detailAddress" name="detailAddress" class="full-width" placeholder="상세 주소" />
-            </div>
-            <div class="form-group">
-                <button type="submit">제출</button>
             </div>
         </div>
     </form>
@@ -110,6 +107,14 @@
     }
 
     window.onload = function() {
+        // 폼 필드 값을 JotForm 필드로 매핑
+        document.getElementById('addressForm').onsubmit = function() {
+            document.querySelector('input[name="q3_postcode"]').value = document.getElementById('postcode').value;
+            document.querySelector('input[name="q4_address"]').value = document.getElementById('address').value;
+            document.querySelector('input[name="q5_detailAddress"]').value = document.getElementById('detailAddress').value;
+        };
+
+        // 부모 iframe에 메시지를 보내어 iframe 크기 조절
         parent.postMessage({
             'action': 'resizeIframe',
             'height': document.body.scrollHeight
