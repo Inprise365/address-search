@@ -13,8 +13,6 @@
             width: 100%;
             display: flex;
             justify-content: flex-start;
-            align-items: flex-start;
-            flex-direction: column;
         }
         .container {
             width: 100%;
@@ -26,11 +24,13 @@
             margin: 10px 0;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             width: 100%;
         }
         .form-group.inline {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
             align-items: center;
             width: 100%;
         }
@@ -65,45 +65,22 @@
             width: 100%;
         }
         @media (max-width: 600px) {
-            .form-group.inline {
-                flex-direction: column;
-                align-items: flex-start;
+            .container {
+                padding: 0;
+                margin: 0;
             }
-            .form-group.inline button {
-                width: 100%;
-                margin-left: 0;
-                margin-top: 10px;
+            .form-group.inline {
+                flex-direction: row;
+                flex-wrap: nowrap;
             }
             .form-group.inline input[type="text"] {
-                width: 100%;
+                flex-grow: 1;
+                width: auto;
             }
-        }
-        /* 레이어 스타일 추가 */
-        #layer {
-            display: none;
-            position: fixed;
-            overflow: hidden;
-            z-index: 100;
-            -webkit-overflow-scrolling: touch;
-            background: #fff;
-            border: 2px solid #000;
-            width: 80%;
-            height: 70%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .dim-layer {
-            display: none;
-            position: fixed;
-            z-index: 99;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.7;
-            background: #000;
+            .form-group.inline button {
+                width: auto;
+                margin-left: 10px;
+            }
         }
     </style>
 </head>
@@ -120,86 +97,18 @@
             <input type="text" id="detailAddress" name="detailAddress" class="full-width" placeholder="상세 주소" />
         </div>
     </div>
-
-    <!-- 레이어 영역 -->
-    <div id="layer">
-        <div id="postLayer" style="width:100%; height:100%;"></div>
-        <div style="text-align:center;margin-top:10px;">
-            <button type="button" onclick="closeDaumPostcode()">닫기</button>
-        </div>
-    </div>
-    <div class="dim-layer" id="dim-layer"></div>
-
     <script>
     function execDaumPostcode() {
-        var element_layer = document.getElementById('layer');
-        var dimLayer = document.getElementById('dim-layer');
-
         new daum.Postcode({
             oncomplete: function(data) {
-                // 우편번호와 기본 주소 필드를 설정
-                document.getElementById('postcode').value = data.zonecode;
-                document.getElementById('address').value = data.address;
-                document.getElementById('detailAddress').focus();
-
-                // JotForm 필드에 데이터 매핑
-                document.querySelector('input[name="q3_postcode"]').value = data.zonecode;
-                document.querySelector('input[name="q4_address"]').value = data.address;
-
-                // 레이어 숨기기
-                element_layer.style.display = 'none';
-                dimLayer.style.display = 'none';
-            },
-            width: '100%',
-            height: '100%'
-        }).embed(element_layer);
-
-        // 레이어 보이기
-        element_layer.style.display = 'block';
-        dimLayer.style.display = 'block';
-
-        // 화면의 높이와 너비를 가져온다.
-        var width = 300; // 원하는 너비 설정
-        var height = 400; // 원하는 높이 설정
-        var borderWidth = 2;
-
-        // 위에서 가져온 높이와 너비를 사용하여 레이어를 가운데로 오도록 한다.
-        element_layer.style.width = width + 'px';
-        element_layer.style.height = height + 'px';
-        element_layer.style.border = borderWidth + 'px solid';
-        element_layer.style.left = ((window.innerWidth - width) / 2 - borderWidth) + 'px';
-        element_layer.style.top = ((window.innerHeight - height) / 2 - borderWidth) + 'px';
-    }
-
-    function closeDaumPostcode() {
-        var element_layer = document.getElementById('layer');
-        var dimLayer = document.getElementById('dim-layer');
-        element_layer.style.display = 'none';
-        dimLayer.style.display = 'none';
+                document.getElementById('postcode').value = data.zonecode; // 우편번호
+                document.getElementById('address').value = data.address; // 기본 주소
+                document.getElementById('detailAddress').focus(); // 상세 주소 입력 필드로 포커스 이동
+            }
+        }).open();
     }
 
     window.onload = function() {
-        // JotForm 필드 초기화
-        if (!document.querySelector('input[name="q3_postcode"]')) {
-            var postcodeField = document.createElement('input');
-            postcodeField.type = 'hidden';
-            postcodeField.name = 'q3_postcode';
-            document.body.appendChild(postcodeField);
-        }
-        if (!document.querySelector('input[name="q4_address"]')) {
-            var addressField = document.createElement('input');
-            addressField.type = 'hidden';
-            addressField.name = 'q4_address';
-            document.body.appendChild(addressField);
-        }
-        if (!document.querySelector('input[name="q5_detailAddress"]')) {
-            var detailAddressField = document.createElement('input');
-            detailAddressField.type = 'hidden';
-            detailAddressField.name = 'q5_detailAddress';
-            document.body.appendChild(detailAddressField);
-        }
-
-        // 부모 iframe에 메시지를 보내어 iframe 크기 조절
         parent.postMessage({
             'action': 'resizeIframe',
             'height': document.body.scrollHeight
