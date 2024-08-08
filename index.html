@@ -13,14 +13,13 @@
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            flex-direction: column;
+            width: 100%;
         }
         .container {
             width: 100%;
             max-width: 600px;
             padding: 0 10px;
             box-sizing: border-box;
-            margin: 0 auto;
         }
         .form-group {
             margin: 10px 0;
@@ -50,7 +49,7 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            margin-left: 10px; /* Add margin between input and button */
+            margin-left: 10px;
             flex-shrink: 0;
         }
         .form-group.inline button i {
@@ -67,6 +66,10 @@
             width: 100%;
         }
         @media (max-width: 600px) {
+            .container {
+                padding: 0;
+                margin: 0;
+            }
             .form-group.inline {
                 flex-direction: row;
                 flex-wrap: nowrap;
