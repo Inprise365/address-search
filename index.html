@@ -1,119 +1,152 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>주소 검색</title>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        padding: 0 10px;
+        box-sizing: border-box;
+      }
+      .form-group {
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+      }
+      .form-group.inline {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .form-group.inline input[type="text"] {
+        flex-grow: 1;
+        min-width: 0;
+      }
+      .form-group.inline button {
+        background-color: #000;
+        color: white;
+        border: none;
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        margin-left: 10px;
+        flex-shrink: 0;
+      }
+      .form-group.inline button i {
+        margin-left: 5px;
+      }
+      input[type="text"],
+      button {
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      button {
+        text-align: center;
+      }
+      .full-width {
+        width: 100%;
+      }
+      @media (max-width: 600px) {
         .container {
-            width: 100%;
-            max-width: 600px;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-        .form-group {
-            margin: 10px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
+          padding: 0;
+          margin: 0;
         }
         .form-group.inline {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
+          flex-direction: row;
+          flex-wrap: nowrap;
         }
         .form-group.inline input[type="text"] {
-            flex-grow: 1;
-            min-width: 0;
+          flex-grow: 1;
+          width: auto;
         }
         .form-group.inline button {
-            background-color: #000;
-            color: white;
-            border: none;
-            padding: 10px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-            margin-left: 10px;
-            flex-shrink: 0;
+          width: auto;
+          margin-left: 10px;
         }
-        .form-group.inline button i {
-            margin-left: 5px;
-        }
-        input[type="text"], button {
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        button {
-            text-align: center;
-        }
-        .full-width {
-            width: 100%;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 0;
-                margin: 0;
-            }
-            .form-group.inline {
-                flex-direction: row;
-                flex-wrap: nowrap;
-            }
-            .form-group.inline input[type="text"] {
-                flex-grow: 1;
-                width: auto;
-            }
-            .form-group.inline button {
-                width: auto;
-                margin-left: 10px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="form-group inline">
-            <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly />
-            <button type="button" onclick="execDaumPostcode()">주소 검색 <i class="fas fa-search"></i></button>
-        </div>
-        <div class="form-group">
-            <input type="text" id="address" name="address" class="full-width" placeholder="기본 주소" />
-        </div>
-        <div class="form-group">
-            <input type="text" id="detailAddress" name="detailAddress" class="full-width" placeholder="상세 주소" />
-        </div>
+      <div class="form-group inline">
+        <input
+          type="text"
+          id="postcode"
+          name="postcode"
+          placeholder="우편번호"
+          readonly
+        />
+        <button type="button" onclick="execDaumPostcode()">
+          주소 검색 <i class="fas fa-search"></i>
+        </button>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          id="address"
+          name="address"
+          class="full-width"
+          placeholder="기본 주소"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          id="detailAddress"
+          name="detailAddress"
+          class="full-width"
+          placeholder="상세 주소"
+        />
+      </div>
     </div>
     <script>
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                document.getElementById('postcode').value = data.zonecode; // 우편번호
-                document.getElementById('address').value = data.address; // 기본 주소
-                document.getElementById('detailAddress').focus(); // 상세 주소 입력 필드로 포커스 이동
-            }
-        }).open();
-    }
+      function execDaumPostcode() {
+        const postcodeWindow = new daum.Postcode({
+          oncomplete: function (data) {
+            const { zonecode, address } = data;
+            document.getElementById("postcode").value = zonecode;
+            document.getElementById("address").value = address;
+            document.getElementById("detailAddress").focus();
 
-    window.onload = function() {
-        parent.postMessage({
-            'action': 'resizeIframe',
-            'height': document.body.scrollHeight
-        }, '*');
-    };
+            const jotFormAddress =
+              window.parent.document.getElementById("#input_19");
+            if (jotFormAddress)
+              jotFormAddress.value = `(${zonecode}) ${address}`;
+          },
+        }).open();
+      }
+
+      window.onload = function () {
+        parent.postMessage(
+          {
+            action: "resizeIframe",
+            height: document.body.scrollHeight,
+          },
+          "*"
+        );
+      };
     </script>
-</body>
+  </body>
 </html>
