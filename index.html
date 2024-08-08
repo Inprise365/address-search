@@ -28,26 +28,25 @@
         }
         .form-group.inline {
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-between; /* Changed to space-between */
             align-items: center;
             gap: 10px;
             width: 100%;
         }
         .form-group.inline input[type="text"] {
-            flex: 2;
-            width: calc(100% - 120px); /* Adjust based on the button size */
+            flex: 1;
+            min-width: 60%;
         }
         .form-group.inline button {
-            flex: 1;
             background-color: #000;
             color: white;
             border: none;
             padding: 10px;
-            width: 100px; /* Fixed button width */
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: auto; /* Ensures button does not stretch */
         }
         .form-group.inline button i {
             margin-left: 5px;
