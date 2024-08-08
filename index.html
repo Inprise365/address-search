@@ -16,17 +16,18 @@
         }
         .form-group {
             margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .form-group.inline {
-            display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 10px;
         }
         .form-group.inline input[type="text"] {
             flex: 2;
-            margin-right: 10px;
             min-width: 60%;
         }
         .form-group.inline button {
@@ -41,6 +42,7 @@
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
+            text-align: left;
         }
     </style>
 </head>
