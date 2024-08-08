@@ -17,6 +17,11 @@
         .form-group {
             margin: 10px 0;
         }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
         .form-group.inline {
             display: flex;
             justify-content: space-between;
@@ -26,7 +31,6 @@
         }
         .form-group.inline input[type="text"] {
             flex: 2;
-            margin-right: 10px;
             min-width: 60%;
         }
         .form-group.inline button {
@@ -47,13 +51,16 @@
 <body>
     <div class="container">
         <div class="form-group inline">
+            <label for="postcode">우편번호</label>
             <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly />
             <button type="button" onclick="execDaumPostcode()">주소 검색</button>
         </div>
         <div class="form-group">
+            <label for="address">기본 주소</label>
             <input type="text" id="address" name="address" placeholder="기본 주소" readonly />
         </div>
         <div class="form-group">
+            <label for="detailAddress">상세 주소</label>
             <input type="text" id="detailAddress" name="detailAddress" placeholder="상세 주소" />
         </div>
     </div>
