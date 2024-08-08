@@ -130,9 +130,11 @@
             document.getElementById("address").value = address;
             document.getElementById("detailAddress").focus();
 
-            document.getElementById(
-              "input_19"
-            ).value = `(${zonecode}) ${address}`;
+            const formattedAddress = `(${zonecode}) ${address}`;
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("address", formattedAddress);
+            window.history.pushState({}, "", currentUrl);
           },
         }).open();
       }
