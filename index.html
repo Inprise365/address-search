@@ -10,6 +10,10 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
         }
         .container {
             width: 100%;
@@ -28,7 +32,7 @@
         .form-group.inline {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             width: 100%;
         }
@@ -46,7 +50,7 @@
             align-items: center;
             justify-content: center;
             white-space: nowrap;
-            margin-left: 10px;
+            margin-left: 10px; /* Add margin between input and button */
             flex-shrink: 0;
         }
         .form-group.inline button i {
@@ -82,4 +86,32 @@
     <div class="container">
         <div class="form-group inline">
             <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly />
-            <button type="button" onclick="execDaumPostcode
+            <button type="button" onclick="execDaumPostcode()">주소 검색 <i class="fas fa-search"></i></button>
+        </div>
+        <div class="form-group">
+            <input type="text" id="address" name="address" class="full-width" placeholder="기본 주소" />
+        </div>
+        <div class="form-group">
+            <input type="text" id="detailAddress" name="detailAddress" class="full-width" placeholder="상세 주소" />
+        </div>
+    </div>
+    <script>
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                document.getElementById('postcode').value = data.zonecode; // 우편번호
+                document.getElementById('address').value = data.address; // 기본 주소
+                document.getElementById('detailAddress').focus(); // 상세 주소 입력 필드로 포커스 이동
+            }
+        }).open();
+    }
+
+    window.onload = function() {
+        parent.postMessage({
+            'action': 'resizeIframe',
+            'height': document.body.scrollHeight
+        }, '*');
+    };
+    </script>
+</body>
+</html>
