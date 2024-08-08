@@ -13,14 +13,11 @@
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            flex-direction: column;
         }
         .container {
             width: 100%;
             padding: 0;
             box-sizing: border-box;
-            max-width: 600px;
-            margin: 0 auto;
         }
         .form-group {
             margin: 10px 0;
@@ -38,19 +35,18 @@
         }
         .form-group.inline input[type="text"] {
             flex: 1;
-            min-width: 0;
+            width: calc(100% - 110px); /* Adjust based on the button size */
         }
         .form-group.inline button {
             background-color: #000;
             color: white;
             border: none;
             padding: 10px;
-            width: auto;
+            width: 100px; /* Fixed button width */
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            white-space: nowrap;
         }
         .form-group.inline button i {
             margin-left: 5px;
@@ -63,18 +59,14 @@
             text-align: center;
         }
         .full-width {
-            width: 100%;
+            width: calc(100% - 20px); /* Adjust padding/margin */
         }
+        /* Ensure the form is left-aligned on all devices */
         @media (max-width: 600px) {
-            .form-group.inline {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .form-group.inline button {
+            .container {
                 width: 100%;
-            }
-            .form-group.inline input[type="text"] {
-                width: 100%;
+                padding: 0;
+                margin: 0;
             }
         }
     </style>
