@@ -130,10 +130,9 @@
             document.getElementById("address").value = address;
             document.getElementById("detailAddress").focus();
 
-            const jotFormAddress =
-              window.parent.document.getElementById("input_19");
-            if (jotFormAddress)
-              jotFormAddress.value = `(${zonecode}) ${address}`;
+            document.getElementById(
+              "input_19"
+            ).value = `(${zonecode}) ${address}`;
           },
         }).open();
       }
