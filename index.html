@@ -135,6 +135,12 @@
             const currentUrl = new URL(window.location.href);
             currentUrl.searchParams.set("address", formattedAddress);
             window.history.pushState({}, "", currentUrl);
+
+            console.log(
+              currentUrl.hostname,
+              currentUrl.pathname,
+              currentUrl.searchParams.get("address")
+            );
           },
         }).open();
       }
