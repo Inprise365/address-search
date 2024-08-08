@@ -13,6 +13,8 @@
             width: 100%;
             display: flex;
             justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
         }
         .container {
             width: 100%;
@@ -24,13 +26,11 @@
             margin: 10px 0;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
             width: 100%;
         }
         .form-group.inline {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
             align-items: center;
             width: 100%;
         }
@@ -65,21 +65,17 @@
             width: 100%;
         }
         @media (max-width: 600px) {
-            .container {
-                padding: 0;
-                margin: 0;
-            }
             .form-group.inline {
-                flex-direction: row;
-                flex-wrap: nowrap;
-            }
-            .form-group.inline input[type="text"] {
-                flex-grow: 1;
-                width: auto;
+                flex-direction: column;
+                align-items: flex-start;
             }
             .form-group.inline button {
-                width: auto;
-                margin-left: 10px;
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .form-group.inline input[type="text"] {
+                width: 100%;
             }
         }
     </style>
