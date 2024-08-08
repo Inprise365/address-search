@@ -10,14 +10,13 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
         }
         .container {
             width: 100%;
-            padding: 0;
+            max-width: 600px;
+            padding: 0 10px;
             box-sizing: border-box;
+            margin: 0 auto;
         }
         .form-group {
             margin: 10px 0;
@@ -27,26 +26,28 @@
             width: 100%;
         }
         .form-group.inline {
+            display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
             width: 100%;
         }
         .form-group.inline input[type="text"] {
-            flex: 1;
-            width: calc(100% - 110px); /* Adjust based on the button size */
+            flex-grow: 1;
+            min-width: 0;
         }
         .form-group.inline button {
             background-color: #000;
             color: white;
             border: none;
             padding: 10px;
-            width: 100px; /* Fixed button width */
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
+            margin-left: 10px;
+            flex-shrink: 0;
         }
         .form-group.inline button i {
             margin-left: 5px;
@@ -59,14 +60,20 @@
             text-align: center;
         }
         .full-width {
-            width: calc(100% - 20px); /* Adjust padding/margin */
+            width: 100%;
         }
-        /* Ensure the form is left-aligned on all devices */
         @media (max-width: 600px) {
-            .container {
-                width: 100%;
-                padding: 0;
-                margin: 0;
+            .form-group.inline {
+                flex-direction: row;
+                flex-wrap: nowrap;
+            }
+            .form-group.inline input[type="text"] {
+                flex-grow: 1;
+                width: auto;
+            }
+            .form-group.inline button {
+                width: auto;
+                margin-left: 10px;
             }
         }
     </style>
@@ -75,32 +82,4 @@
     <div class="container">
         <div class="form-group inline">
             <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly />
-            <button type="button" onclick="execDaumPostcode()">주소 검색 <i class="fas fa-search"></i></button>
-        </div>
-        <div class="form-group">
-            <input type="text" id="address" name="address" class="full-width" placeholder="기본 주소" />
-        </div>
-        <div class="form-group">
-            <input type="text" id="detailAddress" name="detailAddress" class="full-width" placeholder="상세 주소" />
-        </div>
-    </div>
-    <script>
-    function execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                document.getElementById('postcode').value = data.zonecode; // 우편번호
-                document.getElementById('address').value = data.address; // 기본 주소
-                document.getElementById('detailAddress').focus(); // 상세 주소 입력 필드로 포커스 이동
-            }
-        }).open();
-    }
-
-    window.onload = function() {
-        parent.postMessage({
-            'action': 'resizeIframe',
-            'height': document.body.scrollHeight
-        }, '*');
-    };
-    </script>
-</body>
-</html>
+            <button type="button" onclick="execDaumPostcode
