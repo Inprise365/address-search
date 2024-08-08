@@ -55,6 +55,14 @@
         button {
             text-align: center;
         }
+        /* Ensure the form is left-aligned on all devices */
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -81,7 +89,6 @@
         }).open();
     }
 
-    // Resize the iframe to fit the content
     window.onload = function() {
         parent.postMessage({
             'action': 'resizeIframe',
