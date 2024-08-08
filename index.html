@@ -80,6 +80,14 @@
             }
         }).open();
     }
+
+    // Resize the iframe to fit the content
+    window.onload = function() {
+        parent.postMessage({
+            'action': 'resizeIframe',
+            'height': document.body.scrollHeight
+        }, '*');
+    };
     </script>
 </body>
 </html>
